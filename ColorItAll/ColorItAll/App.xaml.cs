@@ -13,7 +13,7 @@ namespace ColorItAll
 		{
 			InitializeComponent();
 
-			MainPage = new ColorItAll.MainPage();
+			MainPage = new NavigationPage(new MainPage());
 		}
 
 		protected override void OnStart ()
