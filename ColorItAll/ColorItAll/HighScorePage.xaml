@@ -3,9 +3,42 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ColorItAll.HighScorePage"
              Title="Highscores">
+
     <ListView x:Name="HighScoreList">
+        <ListView.Header>
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal"
+                         Padding="0,10,0,8">
+                    <Label Text="Name"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="CenterAndExpand"
+                        TextColor="#f35e20" />
+                    <Label Text="Clicks"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="CenterAndExpand"
+                        TextColor="#503026" />
+                </StackLayout>
+                <BoxView  
+                    HorizontalOptions="Fill"
+                    HeightRequest="1"
+                    Color="Blue"/>
+            </StackLayout>
+        </ListView.Header>
         <ListView.ItemTemplate>
             <DataTemplate>
+                <ViewCell >
+                    <StackLayout Orientation="Horizontal"
+                                 VerticalOptions="Center">
+                        <Label Text="{Binding Name}"
+                                   HorizontalOptions="CenterAndExpand"
+                                   TextColor="#f35e20" />
+                        <Label Text="{Binding Clicks}"
+                                   HorizontalOptions="CenterAndExpand"
+                                   TextColor="#503026" />
+                    </StackLayout>
+                </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
