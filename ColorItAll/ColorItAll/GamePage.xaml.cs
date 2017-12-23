@@ -15,13 +15,15 @@ namespace ColorItAll
 	public partial class GamePage : ContentPage
 	{
 	    private readonly List<Button> _buttonList = new List<Button>();
-        private ToolbarItem _clickCounterToolbar = new ToolbarItem();
+        private readonly ToolbarItem _clickCounterToolbar = new ToolbarItem();
+	    private readonly int _gridSize;
 	    private int _clickCounter = 0;
         
 		public GamePage (int gridSize)
 		{
 			InitializeComponent ();
 
+		    _gridSize = gridSize;
             ToolbarItems.Add(_clickCounterToolbar);
 		    GenerateGame(gridSize);
 		}
@@ -30,7 +32,7 @@ namespace ColorItAll
 	    {
 	        var gameGrid = new Grid();
 	        var createdButtons = 0;
-	        _clickCounterToolbar.Text = "0";
+	        _clickCounterToolbar.Text = $"{_clickCounter} Clicks";
 
             for (int i = 0; i < gridSize; i++)
 	        {
@@ -42,7 +44,7 @@ namespace ColorItAll
             {
                 for (int horizontal = 0; horizontal < gridSize; horizontal++)
                 {
-                    var button = new Button { BackgroundColor = (createdButtons % 2 == 0) ? Color.Blue : Color.Red, AutomationId = $"{vertical};{horizontal}"};
+                    var button = new Button { BackgroundColor = (createdButtons % 2 == 0) ? Color.DeepPink : Color.Lime, AutomationId = $"{vertical};{horizontal}"};
                     button.Clicked += ColorClicked;
                     _buttonList.Add(button);
                     gameGrid.Children.Add(button, vertical, horizontal);
@@ -58,11 +60,11 @@ namespace ColorItAll
 	        var button = (Button) sender;
 	        var buttonColor = button.BackgroundColor;
 
-            button.BackgroundColor = buttonColor == Color.Red ? Color.Blue : Color.Red;
-	        ChangeNeighbourButtonColor(button.AutomationId);
+            button.BackgroundColor = buttonColor == Color.Lime ? Color.DeepPink : Color.Lime;
 	        _clickCounter++;
 	        _clickCounterToolbar.Text = $"{_clickCounter} Clicks";
-	    }
+	        ChangeNeighbourButtonColor(button.AutomationId);
+        }
 
 	    private void ChangeNeighbourButtonColor(string buttonId)
 	    {
@@ -75,19 +77,38 @@ namespace ColorItAll
 	            _buttonList.SingleOrDefault(b => b.AutomationId == $"{int.Parse(gridLocataion[0]) - 1};{int.Parse(gridLocataion[1])}")
 	        };
 	        neighbourButtons.RemoveAll(item => item == null);
-            neighbourButtons.ForEach(b => b.BackgroundColor = b.BackgroundColor == Color.Red ? Color.Blue : Color.Red);
+            neighbourButtons.ForEach(b => b.BackgroundColor = b.BackgroundColor == Color.Lime ? Color.DeepPink : Color.Lime);
 
-	        //if (IsVicotryConditionMet())
-
-	            //var name = new PromptConfig
-	            //{
-	            //    InputType = InputType.Name
-	            //};
+            if (IsVicotryConditionMet())
+                HandleVictoryModal();
 	    }
 
 	    private bool IsVicotryConditionMet()
 	    {
-	        return _buttonList.All(b => b.BackgroundColor == Color.Red) || _buttonList.All(b => b.BackgroundColor == Color.Blue);
+	        return _buttonList.All(b => b.BackgroundColor == Color.Lime) || _buttonList.All(b => b.BackgroundColor == Color.DeepPink);
+	    }
+
+	    private async void HandleVictoryModal()
+	    {
+	        var inputName = await UserDialogs.Instance.PromptAsync(new PromptConfig
+	        {
+	            InputType = InputType.Name,
+	            IsCancellable = true,
+	            Text = "Noname",
+	            Title = $"Completed game with {_clickCounter} clicks. Enter a highscore name."
+	        });
+
+	        MainPage.HighScoreList.Add(inputName.Text == string.Empty
+	            ? new HighScore {Name = "Noname", Clicks = _clickCounter}
+	            : new HighScore {Name = inputName.Text, Clicks = _clickCounter});
+	        ResetGame();
+	    }
+
+	    private void ResetGame()
+	    {
+	        _clickCounter = 0;
+	        _buttonList.Clear();
+            GenerateGame(_gridSize);
 	    }
 	}
 }
