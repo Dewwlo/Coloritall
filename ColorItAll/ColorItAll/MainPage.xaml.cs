@@ -7,7 +7,6 @@ namespace ColorItAll
 {
 	public partial class MainPage : ContentPage
 	{
-	    public static ObservableCollection<HighScore> HighScoreList = new ObservableCollection<HighScore>();
         public MainPage()
 		{
 			InitializeComponent();
@@ -24,9 +23,6 @@ namespace ColorItAll
 
         private async void ShowHighScore(object sender, EventArgs e)
         {
-            HighScoreList.Add(new HighScore{Name = "Derp", Clicks = 12});
-            HighScoreList.Add(new HighScore { Name = "Herp", Clicks = 13 });
-            HighScoreList.Add(new HighScore { Name = "Flerp", Clicks = 14 });
             await Navigation.PushAsync(new HighScorePage());
         }
     }

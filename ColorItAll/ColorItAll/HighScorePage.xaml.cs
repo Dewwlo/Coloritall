@@ -16,7 +16,7 @@ namespace ColorItAll
 		public HighScorePage ()
 		{
 			InitializeComponent ();
-		    HighScoreList.ItemsSource = MainPage.HighScoreList.OrderBy(h => h.Clicks);
+		    HighScoreList.ItemsSource = App.HighScoreList.OrderBy(h => h.Clicks);
 		}
 	}
 }

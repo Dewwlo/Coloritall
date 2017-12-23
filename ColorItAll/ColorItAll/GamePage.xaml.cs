@@ -98,7 +98,7 @@ namespace ColorItAll
 	            Title = $"Completed game with {_clickCounter} clicks. Enter a highscore name."
 	        });
 
-	        MainPage.HighScoreList.Add(inputName.Text == string.Empty
+	        App.HighScoreList.Add(inputName.Text == string.Empty
 	            ? new HighScore {Name = "Noname", Clicks = _clickCounter}
 	            : new HighScore {Name = inputName.Text, Clicks = _clickCounter});
 	        ResetGame();
