@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
 using ColorItAll.Data;
 using Java.IO;
 using Xamarin.Forms;
@@ -14,6 +15,8 @@ namespace ColorItAll
 {
 	public partial class MainPage : ContentPage
 	{
+	    private readonly FamousQuoteManager _manager = new FamousQuoteManager();
+
         public MainPage()
 		{
 			InitializeComponent();
@@ -33,14 +36,9 @@ namespace ColorItAll
             await Navigation.PushAsync(new HighScoreMenuPage());
         }
 
-	    private async void RandomFamousQuote_OnClicked(object sender, EventArgs e)
+	    private void RandomFamousQuote_OnClicked(object sender, EventArgs e)
 	    {
-            var manager = new NasaApiManager();
-            var quote = await manager.GetFamousQuote();
-	        if (quote != null)
-	        {
-	            await DisplayAlert("Author: " + quote.Author, quote.Quote, "Ok");
-            }
+            _manager.LoadQuotePrompt();
         }
 	}
 }

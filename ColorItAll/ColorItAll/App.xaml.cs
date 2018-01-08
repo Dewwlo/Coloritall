@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 
@@ -20,11 +23,15 @@ namespace ColorItAll
 
 		protected override void OnStart ()
 		{
+            AppCenter.Start("android=bb3170c4-006b-4c90-9b7b-2b734a476a31;" + "uwp={Your UWP App secret here};" +
+                            "ios={Your iOS App secret here}",
+                typeof(Analytics), typeof(Crashes));
+
             var getHighScore = "";
 
             try
             {
-                    getHighScore = DependencyService.Get<ISaveAndLoad>().LoadText("highscore.txt");
+                getHighScore = DependencyService.Get<ISaveAndLoad>().LoadText("highscore.txt");
             }
             catch (Exception e)
             {
@@ -39,7 +46,7 @@ namespace ColorItAll
 
         protected override void OnSleep ()
 		{
-            DependencyService.Get<ISaveAndLoad>().SaveText("highscore.txt", JsonConvert.SerializeObject(HighScoreList));
+
         }
 
 		protected override void OnResume ()

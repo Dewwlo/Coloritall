@@ -6,7 +6,7 @@ using Acr.UserDialogs;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -131,7 +131,8 @@ namespace ColorItAll
 	            : new HighScore { Name = inputName, Difficulty = GetGameDifficulty(), Clicks = _clickCounter });
 	        UpdateHighScoreList();
 
-	    }
+	        DependencyService.Get<ISaveAndLoad>().SaveText("highscore.txt", JsonConvert.SerializeObject(App.HighScoreList));
+        }
 	    private void UpdateHighScoreList()
 	    {
             App.HighScoreList = new ObservableCollection<HighScore>(App.HighScoreList.OrderBy(h => h.Clicks).Take(10));
