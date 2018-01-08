@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Acr.UserDialogs;
 using System.Text;
@@ -30,14 +31,16 @@ namespace ColorItAll
 
 	    private void GenerateGame(int gridSize)
 	    {
-	        var gameGrid = new Grid();
-	        var createdButtons = 0;
+	        var gameGrid = new Grid{RowSpacing = 0, ColumnSpacing = 0, VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.Center};
+            var createdButtons = 0;
 	        _clickCounterToolbar.Text = $"{_clickCounter} Clicks";
+
+	        var ratio = Application.Current.MainPage.Height < Application.Current.MainPage.Width ? Application.Current.MainPage.Height / gridSize : Application.Current.MainPage.Width / gridSize;
 
             for (int i = 0; i < gridSize; i++)
 	        {
-	            gameGrid.RowDefinitions.Add(new RowDefinition {Height = GridLength.Star});
-	            gameGrid.ColumnDefinitions.Add(new ColumnDefinition {Width = GridLength.Star});
+	            gameGrid.RowDefinitions.Add(new RowDefinition {Height = ratio});
+	            gameGrid.ColumnDefinitions.Add(new ColumnDefinition {Width = ratio});
 	        }
 
             for (int vertical = 0; vertical < gridSize; vertical++)
@@ -53,7 +56,7 @@ namespace ColorItAll
             }
 
             Content = gameGrid;
-	    }
+        }
 
 	    private void ColorClicked(object sender, EventArgs e)
 	    {
@@ -88,7 +91,26 @@ namespace ColorItAll
 	        return _buttonList.All(b => b.BackgroundColor == Color.Lime) || _buttonList.All(b => b.BackgroundColor == Color.DeepPink);
 	    }
 
-	    private async void HandleVictoryModal()
+	    private void HandleVictoryModal()
+	    {
+	        var highScoreListDifficulty = App.HighScoreList.Where(h => h.Difficulty == GetGameDifficulty()).ToList();
+	        if (highScoreListDifficulty.Count() < 10 || highScoreListDifficulty.Max(h => h.Clicks >= _clickCounter))
+	            CreateInputVicotryModal();
+	        else
+	            CreateMessageVicotryModal();
+        }
+
+	    private async void CreateMessageVicotryModal()
+	    {
+	        await UserDialogs.Instance.ConfirmAsync(new ConfirmConfig
+	        {
+	            Title = $"Completed game with {_clickCounter} clicks."
+            });
+
+	        ResetGame();
+        }
+
+        private async void CreateInputVicotryModal()
 	    {
 	        var inputName = await UserDialogs.Instance.PromptAsync(new PromptConfig
 	        {
@@ -98,11 +120,27 @@ namespace ColorItAll
 	            Title = $"Completed game with {_clickCounter} clicks. Enter a highscore name."
 	        });
 
-	        App.HighScoreList.Add(inputName.Text == string.Empty
-	            ? new HighScore {Name = "Noname", Clicks = _clickCounter}
-	            : new HighScore {Name = inputName.Text, Clicks = _clickCounter});
-	        ResetGame();
+            CreateHighScore(inputName.Text);
+            ResetGame();
 	    }
+
+	    private void CreateHighScore(string inputName = null)
+	    {
+	        App.HighScoreList.Add(inputName == string.Empty
+	            ? new HighScore { Name = "Noname", Difficulty = GetGameDifficulty(), Clicks = _clickCounter }
+	            : new HighScore { Name = inputName, Difficulty = GetGameDifficulty(), Clicks = _clickCounter });
+	        UpdateHighScoreList();
+
+	    }
+	    private void UpdateHighScoreList()
+	    {
+            App.HighScoreList = new ObservableCollection<HighScore>(App.HighScoreList.OrderBy(h => h.Clicks).Take(10));
+	    }
+
+	    private string GetGameDifficulty()
+	    {
+	        return DictionaryTranslater.GameMode.FirstOrDefault(d => d.Value == _gridSize).Key;
+        }
 
 	    private void ResetGame()
 	    {

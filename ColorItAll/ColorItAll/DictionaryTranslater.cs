@@ -8,9 +8,9 @@ namespace ColorItAll
     {
         public static Dictionary<string, int> GameMode = new Dictionary<string, int>
         {
-            {"PlayEasy", 3},
-            {"PlayNormal", 4},
-            {"PlayHard", 5}
+            {"Easy", 3},
+            {"Normal", 5},
+            {"Hard", 7}
         };
     }
 }

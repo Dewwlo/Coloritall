@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace ColorItAll
@@ -13,10 +14,10 @@ namespace ColorItAll
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HighScorePage : ContentPage
 	{
-		public HighScorePage ()
+		public HighScorePage (string difficulty)
 		{
 			InitializeComponent ();
-		    HighScoreList.ItemsSource = App.HighScoreList.OrderBy(h => h.Clicks);
+		    HighScoreList.ItemsSource = App.HighScoreList.Where(h => h.Difficulty == difficulty).OrderBy(h => h.Clicks);
 		}
 	}
 }

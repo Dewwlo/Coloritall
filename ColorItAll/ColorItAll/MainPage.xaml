@@ -12,9 +12,10 @@
                HorizontalOptions="Center" />
         <StackLayout VerticalOptions="CenterAndExpand"
                      HorizontalOptions="Center">
-            <Button ClassId="PlayEasy" Text="Easy" BackgroundColor="ForestGreen" Clicked="Play_OnClicked"/>
-            <Button ClassId="PlayNormal" Text="Normal" BackgroundColor="Gold" Clicked="Play_OnClicked"/>
-            <Button ClassId="PlayHard" Text="Hard"  BackgroundColor="Crimson" Clicked="Play_OnClicked"/>
+            <Button AutomationId="Easy" Text="Easy" BackgroundColor="ForestGreen" Clicked="Play_OnClicked"/>
+            <Button AutomationId="Normal" Text="Normal" BackgroundColor="Gold" Clicked="Play_OnClicked"/>
+            <Button AutomationId="Hard" Text="Hard"  BackgroundColor="Crimson" Clicked="Play_OnClicked"/>
+            <Button AutomationId="FamousQuote" Text="Random famous quote"  BackgroundColor="DeepSkyBlue" Clicked="RandomFamousQuote_OnClicked"/>
         </StackLayout>
     </StackLayout>
 </ContentPage>
