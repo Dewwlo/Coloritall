@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Acr.UserDialogs;
 using ColorItAll.Data;
-using Java.IO;
 using Xamarin.Forms;
-using Console = System.Console;
 
 namespace ColorItAll
 {
-	public partial class MainPage : ContentPage
+    public partial class MainPage : ContentPage
 	{
 	    private readonly FamousQuoteManager _manager = new FamousQuoteManager();
 

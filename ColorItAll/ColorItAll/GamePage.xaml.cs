@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Acr.UserDialogs;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using ColorItAll.Data;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace ColorItAll
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class GamePage : ContentPage
 	{
 	    private readonly List<Button> _buttonList = new List<Button>();

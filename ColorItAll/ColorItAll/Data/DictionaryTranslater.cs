@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ColorItAll
+namespace ColorItAll.Data
 {
     public static class DictionaryTranslater
     {

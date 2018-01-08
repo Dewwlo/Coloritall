@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
-using Android.Views;
 using Newtonsoft.Json;
 
 namespace ColorItAll.Data

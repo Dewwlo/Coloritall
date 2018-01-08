@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ColorItAll
+﻿namespace ColorItAll.Data
 {
     public partial class HighScore
     {
