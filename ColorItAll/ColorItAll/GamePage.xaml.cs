@@ -5,6 +5,7 @@ using System.Linq;
 using Acr.UserDialogs;
 using System.Text.RegularExpressions;
 using ColorItAll.Data;
+using Microsoft.AppCenter.Analytics;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -30,7 +31,8 @@ namespace ColorItAll
 
 	    private void GenerateGame(int gridSize)
 	    {
-	        var gameGrid = new Grid{RowSpacing = 0, ColumnSpacing = 0, VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.Center};
+	        Analytics.TrackEvent($"Game Started {GetGameDifficulty()}");
+            var gameGrid = new Grid{RowSpacing = 0, ColumnSpacing = 0, VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.Center};
             var createdButtons = 0;
 	        _clickCounterToolbar.Text = $"{_clickCounter} Clicks";
 
@@ -92,6 +94,7 @@ namespace ColorItAll
 
 	    private void HandleVictoryModal()
 	    {
+            Analytics.TrackEvent($"Finnished Game with {_clickCounter} clicks");
 	        var highScoreListDifficulty = App.HighScoreList.Where(h => h.Difficulty == GetGameDifficulty()).ToList();
 	        if (highScoreListDifficulty.Count() < 10 || highScoreListDifficulty.Max(h => h.Clicks >= _clickCounter))
 	            CreateInputVicotryModal();

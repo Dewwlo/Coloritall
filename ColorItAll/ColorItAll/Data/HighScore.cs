@@ -1,6 +1,6 @@
 ﻿namespace ColorItAll.Data
 {
-    public partial class HighScore
+    public class HighScore
     {
         public string Name { get; set; }
         public string Difficulty { get; set; }

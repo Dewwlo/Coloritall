@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
+using Microsoft.AppCenter.Analytics;
 using Newtonsoft.Json;
 
 namespace ColorItAll.Data
@@ -24,14 +25,17 @@ namespace ColorItAll.Data
 
         public async Task<FamousQuote> GetFamousQuote()
         {
+            Analytics.TrackEvent("Requested random famous quote");
             try
             {
                 var result = await _client.GetStringAsync("?cat=famous&count=1");
+                Analytics.TrackEvent("Quote request successful");
                 return JsonConvert.DeserializeObject<FamousQuote>(result);
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
+                Analytics.TrackEvent("Quote request failed");
                 return null;
             }
         }

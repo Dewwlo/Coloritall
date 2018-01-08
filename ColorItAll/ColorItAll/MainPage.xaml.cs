@@ -18,6 +18,7 @@ namespace ColorItAll
 
 	    private async void Play_OnClicked(object sender, EventArgs e)
 	    {
+
             var button = (Button)sender;
 	        await Navigation.PushAsync(new GamePage(DictionaryTranslater.GameMode[button.AutomationId]));
 	    }
