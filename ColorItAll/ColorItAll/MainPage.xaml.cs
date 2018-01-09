@@ -1,5 +1,7 @@
 ﻿using System;
+using Acr.UserDialogs;
 using ColorItAll.Data;
+using ColorItAll.Interface;
 using Xamarin.Forms;
 
 namespace ColorItAll
@@ -14,11 +16,15 @@ namespace ColorItAll
             var highScore = new ToolbarItem { Text = "Highscore" };
             highScore.Clicked += ShowHighScore;
             ToolbarItems.Add(highScore);
-        }
+
+            
+		    var tgr = new TapGestureRecognizer();
+            tgr.Tapped += CallUs_OnClicked;
+            CallUs.GestureRecognizers.Add(tgr);
+		}
 
 	    private async void Play_OnClicked(object sender, EventArgs e)
 	    {
-
             var button = (Button)sender;
 	        await Navigation.PushAsync(new GamePage(DictionaryTranslater.GameMode[button.AutomationId]));
 	    }
@@ -32,5 +38,24 @@ namespace ColorItAll
 	    {
             _manager.LoadQuotePrompt();
         }
-	}
+
+	    async void CallUs_OnClicked(object sender, EventArgs e)
+	    {
+	        var result = await UserDialogs.Instance.ConfirmAsync(new ConfirmConfig
+	        {
+	            Title = "Call us",
+	            Message = "Are you sure?",
+	            OkText = "Yes",
+	            CancelText = "No"
+	        });
+
+            if (result) {
+	            var dialer = DependencyService.Get<IDialer>();
+	            if (dialer != null)
+	            {
+	                await dialer.DialAsync("00000000000");
+	            }
+	        }
+	    }
+    }
 }

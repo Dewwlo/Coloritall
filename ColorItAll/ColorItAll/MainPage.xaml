@@ -17,5 +17,6 @@
             <Button AutomationId="Hard" Text="Hard"  BackgroundColor="Crimson" Clicked="Play_OnClicked"/>
             <Button AutomationId="FamousQuote" Text="Random famous quote"  BackgroundColor="DeepSkyBlue" Clicked="RandomFamousQuote_OnClicked"/>
         </StackLayout>
+        <Label  x:Name="CallUs" Text="Call us" VerticalOptions="End" HorizontalOptions="Center"></Label>
     </StackLayout>
 </ContentPage>

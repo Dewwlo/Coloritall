@@ -29,15 +29,21 @@
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell >
-                    <StackLayout Orientation="Horizontal"
-                                 VerticalOptions="Center">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
                         <Label Text="{Binding Name}"
-                                   HorizontalOptions="CenterAndExpand"
-                                   TextColor="#f35e20" />
+                               Grid.Column="0"
+                               HorizontalOptions="Center"
+                               TextColor="#f35e20" />
                         <Label Text="{Binding Clicks}"
-                                   HorizontalOptions="CenterAndExpand"
-                                   TextColor="#503026" />
-                    </StackLayout>
+                               Grid.Column="1"
+                               HorizontalOptions="Center"
+                               TextColor="#503026" />
+                    </Grid>
+
                 </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>

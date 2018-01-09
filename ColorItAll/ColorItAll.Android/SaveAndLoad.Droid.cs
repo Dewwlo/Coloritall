@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Xamarin.Forms;
 using ColorItAll.Droid;
+using ColorItAll.Interface;
 
 [assembly: Dependency(typeof(SaveAndLoad))]
 namespace ColorItAll.Droid

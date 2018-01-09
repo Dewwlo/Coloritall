@@ -5,6 +5,7 @@ using System.Linq;
 using Acr.UserDialogs;
 using System.Text.RegularExpressions;
 using ColorItAll.Data;
+using ColorItAll.Interface;
 using Microsoft.AppCenter.Analytics;
 using Newtonsoft.Json;
 using Xamarin.Forms;

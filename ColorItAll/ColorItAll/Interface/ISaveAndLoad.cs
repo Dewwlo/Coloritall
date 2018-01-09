@@ -1,4 +1,4 @@
-﻿namespace ColorItAll
+﻿namespace ColorItAll.Interface
 {
     public interface ISaveAndLoad
     {
